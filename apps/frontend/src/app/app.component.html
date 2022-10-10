@@ -1,6 +1,32 @@
 <ht-mast-head></ht-mast-head>
 
 <main class="h-auto p-8 m-auto">
-    
-    <router-outlet></router-outlet>
+  <nav class="grid content-center">
+    <div class="tabs">
+      <a
+        routerLink=""
+        [routerLinkActive]="[
+          'tab-active',
+          'tab-lifted',
+          'text-accent',
+          'font-bold'
+        ]"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="tab tab-lg"
+        >Home</a
+      >
+      <a
+        routerLink="/data"
+        [routerLinkActive]="[
+          'tab-active',
+          'tab-lifted',
+          'text-accent',
+          'font-bold'
+        ]"
+        class="tab tab-lg"
+        >Data</a
+      >
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
 </main>
