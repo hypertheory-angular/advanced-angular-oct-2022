@@ -20,6 +20,7 @@
     "paths": {
       "@ht/core-ui": ["libs/core-ui/src/index.ts"],
       "@ht/dashboard": ["libs/dashboard/src/index.ts"],
+      "@ht/data-stuff": ["libs/data-stuff/src/index.ts"],
       "@ht/shared": ["libs/shared/src/index.ts"]
     }
   },

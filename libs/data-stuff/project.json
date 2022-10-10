@@ -1,0 +1,27 @@
+{
+  "name": "data-stuff",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/data-stuff/src",
+  "prefix": "ht",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/data-stuff"],
+      "options": {
+        "jestConfig": "libs/data-stuff/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/data-stuff/**/*.ts",
+          "libs/data-stuff/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
