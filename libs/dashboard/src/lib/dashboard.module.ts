@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
-import { CoreUiModule } from '@ht/core-ui';
+import { AlertComponent, CoreUiModule } from '@ht/core-ui';
+import { OverviewComponent } from './components/overview/overview.component';
+import { ResourcesComponent } from './components/resources/resources.component';
 
 const routes: Routes = [
   {
@@ -14,8 +16,12 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    CoreUiModule,
+    AlertComponent,
   ],
-  declarations: [DashboardComponent],
+  declarations: [
+    DashboardComponent,
+    OverviewComponent,
+    ResourcesComponent,
+  ],
 })
 export class DashboardModule {}

@@ -1,4 +1,16 @@
-<ht-ui-alert alertStyle="warning" >
-    <p>Jeff Was Here</p>
-    <p>Another Message!</p>
-</ht-ui-alert>
+<section data-testid="dashboard"
+>
+<div class="flex justify-center w-full py-2 gap-2">
+    <a href="#overview" class="btn btn-xs">Overview</a>
+    <a href="#resources" class="btn btn-xs">Resources</a>
+</div>
+<div class="carousel w-full">
+    <div id="overview" class="carousel-item relative w-full">
+        <ht-dashboard-overview></ht-dashboard-overview>
+    </div>
+    <div class="carousel-item relative w-full" id="resources">
+        <ht-dashboard-resources></ht-dashboard-resources>
+    </div>
+
+</div>
+</section>
