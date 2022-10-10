@@ -1,9 +1,11 @@
 describe('The Data CRM Feature', () => {
-  beforeEach(() => {
-    cy.visit('/data/crm');
-  });
-
   describe('The Happy Path', () => {
+    beforeEach(() => {
+      cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
+        fixture: 'employees-full.json'
+      });
+      cy.visit('/data/crm');
+    });
     it('loads', () => {
       // left intentionally blank.
     });
