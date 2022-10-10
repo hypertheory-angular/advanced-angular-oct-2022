@@ -17,7 +17,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ht/core-ui": ["libs/core-ui/src/index.ts"],
+      "@ht/dashboard": ["libs/dashboard/src/index.ts"],
+      "@ht/shared": ["libs/shared/src/index.ts"]
+    }
   },
   "exclude": [
     "node_modules",
