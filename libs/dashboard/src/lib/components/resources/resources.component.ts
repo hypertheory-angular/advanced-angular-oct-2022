@@ -9,7 +9,7 @@ export class ResourcesComponent {
   items: LinkItem[] = [
     {
       title: 'NX - Monorepos for Angular',
-      content: 'The tool that wraps Angular CLI',
+      content: 'The tool that wraps <em>Angular CLI</em>',
       link: 'https://nx.dev',
       linkText: 'Learn about NX',
     },

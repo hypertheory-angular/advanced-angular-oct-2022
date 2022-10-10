@@ -1,12 +1,12 @@
-<section class="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4">
-<div class="card w-96 bg-base-100 shadow-xl" *ngFor="let item of items">
-    <div class="card-body">
-        <h2 class="card-title">{{item.title}}</h2>
-        <p>{{item.content}}</p>
-        <div class="card-actions justify-end">
-            <a class="btn btn-sm btn-primary" target="_blank" [href]="item.link">{{item.linkText}}</a>
-        </div>
-    </div>
-</div>
-
+<section
+  class="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-4"
+>
+  <ht-ui-card-with-link
+    [title]="item.title"
+    [link]="item.link"
+    [linkText]="item.linkText"
+    *ngFor="let item of items"
+  >
+    <div [innerHtml]="item.content"></div>
+  </ht-ui-card-with-link>
 </section>
