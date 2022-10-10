@@ -7,7 +7,12 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 import { MastHeadComponent } from './components/mast-head/mast-head.component';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('@ht/dashboard').then((m) => m.DashboardModule),
+  },
+];
 @NgModule({
   declarations: [
     AppComponent,
