@@ -1,0 +1,101 @@
+<div class="prose">
+  <h2>Problem we are trying to solve:</h2>
+  <p>
+    We want to have a way to say "this element" (any element) is going to
+    display some data from an API.
+  </p>
+  <p>IF the data is present, display it (happy path)</p>
+  <p>
+    IF the data is not present, but is still loading, display a loading message
+  </p>
+  <p>
+    If the data is present, but contains no data, display an "empty data"
+    message
+  </p>
+  <p>If there is an error getting the data, show an error message</p>
+</div>
+
+<section>
+  <p>Basic Demo</p>
+
+  <div *htSharedLoadingModes="modes$ | async">
+    <div>
+      <p>Hello! I'm Here and Ready to Rock!</p>
+    </div>
+  </div>
+
+  <div
+    *htSharedLoadingModes="
+      modes$ | async;
+      loading: 'Chill. Getting your Data';
+      empty: 'Bummer, you have no data!';
+      errored: 'Blammo! That done blew up!'
+    "
+  >
+    <div>
+      <p>Hello! I'm Here and Ready to Rock!</p>
+    </div>
+  </div>
+
+  <div
+    *htSharedLoadingModes="
+      modes$ | async;
+      loading: loadingTemplate;
+      empty: EmptyTemplate;
+      errored: ErroredTemplate
+    "
+  >
+    <div>
+      <p>Hello! I'm Here and Ready to Rock!</p>
+    </div>
+  </div>
+</section>
+<section>
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="setInitialState()"
+    >
+      Initial State
+    </button>
+  </div>
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="setLoadedAndEmpty()"
+    >
+      Loaded Empty
+    </button>
+  </div>
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="setLoadedAndNotEmpty()"
+    >
+      Loaded Not Empty
+    </button>
+  </div>
+  <div>
+    <button
+      class="btn btn-primary"
+      (click)="setLoadedAndErrored()"
+    >
+      Loaded And Errored
+    </button>
+  </div>
+</section>
+<pre>
+    {{ modes$ | async | json }}
+</pre>
+
+<ng-template #loadingTemplate>
+  <p>This is the template I'm using to say stuff is loading.</p>
+</ng-template>
+
+<ng-template #ErroredTemplate>
+  <p>This is the template I'm using to say there was an error!.</p>
+</ng-template>
+
+<ng-template #EmptyTemplate>
+  <p>This is the template I'm using to say there is no data.</p>
+</ng-template>

@@ -12,11 +12,17 @@ import { CustomersComponent } from './containers/customers/customers.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { AlertComponent } from '@ht/core-ui';
+import { ModesComponent } from './containers/modes/modes.component';
+import { SharedModule } from '@ht/shared';
 const routes: Routes = [
   {
     path: '',
     component: DataStuffComponent,
     children: [
+      {
+        path: 'modes',
+        component: ModesComponent,
+      },
       {
         path: 'crm',
         component: CustomersComponent,
@@ -44,6 +50,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     StoreModule.forFeature(featureName, reducers),
     AlertComponent,
+    SharedModule,
     EffectsModule.forFeature([CustomerEffects]),
     HttpClientModule,
   ],
@@ -53,6 +60,7 @@ const routes: Routes = [
     CustomersComponent,
     CustomerListComponent,
     CustomerDetailsComponent,
+    ModesComponent,
   ],
 })
 export class DataStuffModule {}

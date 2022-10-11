@@ -10,4 +10,5 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AlertComponent {
   @Input() alertStyle: 'info' | 'warning' | 'success' | 'error' = 'info';
+  @Input() message: string | null = null;
 }
