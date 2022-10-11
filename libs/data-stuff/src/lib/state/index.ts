@@ -69,12 +69,13 @@ export const selectCustomerDetails = createSelector(
     }
     const customer = customers[id];
     if (customer) {
-      return {
+      const result: fromModels.CustomerDetailsItem & LoadingModes = {
         ...customer,
         loading: !loading,
         errored: errored,
         empty: false,
-      } as fromModels.CustomerDetailsItem & LoadingModes;
+      };
+      return result;
     } else {
       return null;
     }
@@ -91,13 +92,13 @@ export const selectCustomerListModel = createSelector(
       errored,
       empty: customers.length === 0,
       data: customers.map(
-        (cust) =>
-          ({
-            id: cust.id,
-            firstName: cust.firstName,
-            lastName: cust.lastName,
-            company: cust.company,
-          } as fromModels.CustomerSummaryListItem),
+        (cust): fromModels.CustomerSummaryListItem => ({
+          id: cust.id,
+          firstName: cust.firstName,
+          lastName: cust.lastName,
+          fullName: `${cust.firstName} ${cust.lastName}`,
+          company: cust.company,
+        }),
       ),
     };
     return result;

@@ -13,7 +13,7 @@
       <li *ngFor="let cust of (model$ | async)?.data as model">
         <div class="card w-96 bg-base-100 shadow-xl">
           <div class="card-body">
-            <h2 class="card-title">{{ cust.firstName }} {{ cust.lastName }}</h2>
+            <h2 class="card-title">{{ cust.fullName }}</h2>
             <p>{{ cust.firstName }} works at {{ cust.company }}</p>
             <div class="card-actions justify-end">
               <a
