@@ -10,3 +10,5 @@ export type CustomerSummaryListItem = Pick<
 export type CustomerSummaryList = {
   data: CustomerSummaryListItem[];
 };
+
+export type CustomerDetailsItem = CustomerEntity;

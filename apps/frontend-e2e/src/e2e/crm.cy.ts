@@ -1,5 +1,5 @@
 describe('The Data CRM Feature', () => {
-  describe.only('The Happy Path', () => {
+  describe('The Happy Path', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',
@@ -37,7 +37,7 @@ describe('The Data CRM Feature', () => {
     });
   });
 
-  describe('Slow Api Response', () => {
+  describe.only('Slow Api Response', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',

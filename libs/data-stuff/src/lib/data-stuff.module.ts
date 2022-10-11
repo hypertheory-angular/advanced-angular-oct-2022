@@ -11,7 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CustomersComponent } from './containers/customers/customers.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
-import { AlertComponent } from '@ht/core-ui';
+import { AlertComponent, CoreUiModule } from '@ht/core-ui';
 import { ModesComponent } from './containers/modes/modes.component';
 import { SharedModule } from '@ht/shared';
 import { DataStuffEffects } from './state/effects/data-stuff.effects';
@@ -58,6 +58,7 @@ const routes: Routes = [
       DataStuffEffects,
     ]),
     HttpClientModule,
+    CoreUiModule,
   ],
   declarations: [
     DataStuffComponent,

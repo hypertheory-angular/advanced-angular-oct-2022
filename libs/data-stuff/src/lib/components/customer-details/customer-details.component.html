@@ -1,1 +1,19 @@
-<p>details</p>
+<ng-container *ngIf="customer$ | async as customer">
+  <div *htSharedLoadingModes="customer">
+    <ht-ui-card-with-link
+      [title]="customer.firstName + ' ' + customer.lastName"
+    >
+      <p>Details about {{ customer.firstName + ' ' + customer.lastName }}</p>
+      <p>{{ customer.firstName }} works at {{ customer.company }}</p>
+      <p>You can email {{ customer.firstName }} at {{ customer.email }}</p>
+      <p>{{ customer.firstName }} address is {{ customer.address }}</p>
+    </ht-ui-card-with-link>
+  </div>
+
+  <ht-ui-alert
+    *ngIf="(customer$ | async) === null"
+    message="That Customer Does Exist"
+  ></ht-ui-alert>
+</ng-container>
+
+<pre> {{ customer$ | async | json }} </pre>

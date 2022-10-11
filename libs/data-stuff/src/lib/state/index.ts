@@ -26,8 +26,10 @@ const selectFeature = createFeatureSelector<DataStuffState>(featureName);
 const selectCustomersBranch = createSelector(selectFeature, (f) => f.customers);
 
 // 3. Helpers (optional)
-const { selectAll: selectAllCustomerEntityArray } =
-  fromCustomers.adapter.getSelectors(selectCustomersBranch);
+const {
+  selectAll: selectAllCustomerEntityArray,
+  selectEntities: selectCustomerEntities,
+} = fromCustomers.adapter.getSelectors(selectCustomersBranch);
 
 const selectCustomersLoaded = createSelector(
   selectCustomersBranch,
@@ -51,6 +53,27 @@ export const selectCustomersNeedLoaded = createSelector(
     return !loaded && !!url.match(paths.crm);
   },
 );
+
+export const selectCustomerDetails = (id: string) =>
+  createSelector(
+    selectCustomerEntities,
+    selectCustomersLoaded,
+    selectCustomersErrored,
+    (customers, loaded, errored) => {
+      const customer = customers[id];
+      if (customer) {
+        return {
+          ...customer,
+          loading: false,
+          errored: errored,
+          empty: false,
+        } as fromModels.CustomerDetailsItem & LoadingModes;
+      } else {
+        return null;
+      }
+    },
+  );
+
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,
   selectCustomersLoaded,
