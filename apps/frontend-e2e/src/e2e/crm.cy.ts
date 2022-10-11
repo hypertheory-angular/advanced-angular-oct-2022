@@ -1,5 +1,5 @@
 describe('The Data CRM Feature', () => {
-  describe('The Happy Path', () => {
+  describe.only('The Happy Path', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',
@@ -25,7 +25,7 @@ describe('The Data CRM Feature', () => {
     });
   });
 
-  describe('No Data From The Api', () => {
+  describe('Error Response from The Api', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         statusCode: 400,

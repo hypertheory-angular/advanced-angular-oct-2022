@@ -9,6 +9,7 @@ export interface CustomerEntity {
   email: string;
   dob: string;
   address: string;
+  company: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

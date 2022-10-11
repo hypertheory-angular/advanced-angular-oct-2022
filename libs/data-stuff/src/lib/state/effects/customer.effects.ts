@@ -49,6 +49,7 @@ function mapApiCustomersToCustomerEntities(
       address: a.profile.address,
       dob: a.profile.dob,
       email: a.email,
+      company: a.profile.company,
     };
     return result;
   });

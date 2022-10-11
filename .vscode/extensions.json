@@ -5,6 +5,8 @@
     "esbenp.prettier-vscode",
     "firsttris.vscode-jest-runner",
     "dbaeumer.vscode-eslint",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "rhalaly.scope-to-this",
+    "Gruntfuggly.todo-tree"
   ]
 }

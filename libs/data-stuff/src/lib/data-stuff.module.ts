@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataStuffComponent } from './data-stuff.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -8,6 +8,9 @@ import { featureName, reducers } from './state';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomerEffects } from './state/effects/customer.effects';
 import { EffectsModule } from '@ngrx/effects';
+import { CustomersComponent } from './containers/customers/customers.component';
+import { CustomerListComponent } from './components/customer-list/customer-list.component';
+import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 const routes: Routes = [
   {
     path: '',
@@ -15,7 +18,21 @@ const routes: Routes = [
     children: [
       {
         path: 'crm',
-        component: CrmComponent,
+        component: CustomersComponent,
+        children: [
+          {
+            path: 'list',
+            component: CustomerListComponent,
+          },
+          {
+            path: 'details', // TODO: Add Route Parameter
+            component: CustomerDetailsComponent,
+          },
+          {
+            path: '**', // If they don't specify, this is a 'catchall'
+            redirectTo: 'list',
+          },
+        ],
       },
     ],
   },
@@ -31,6 +48,9 @@ const routes: Routes = [
   declarations: [
     DataStuffComponent,
     CrmComponent,
+    CustomersComponent,
+    CustomerListComponent,
+    CustomerDetailsComponent,
   ],
 })
 export class DataStuffModule {}
