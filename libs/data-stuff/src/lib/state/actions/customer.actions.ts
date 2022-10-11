@@ -10,6 +10,7 @@ export const CustomerEvents = createActionGroup({
   source: 'Customer Events',
   events: {
     error: emptyProps(),
+    selected: props<{ payload: string }>(),
   },
 });
 // Commands

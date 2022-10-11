@@ -39,6 +39,10 @@ const selectCustomersErrored = createSelector(
   selectCustomersBranch,
   (b) => b.errored,
 );
+const selectSelectedCustomerId = createSelector(
+  selectCustomersBranch,
+  (b) => b.selectedCustomerId,
+);
 // 4. What your Components Need
 
 // if they are at the /crm url (the end of contains /crm)
@@ -54,25 +58,28 @@ export const selectCustomersNeedLoaded = createSelector(
   },
 );
 
-export const selectCustomerDetails = (id: string) =>
-  createSelector(
-    selectCustomerEntities,
-    selectCustomersLoaded,
-    selectCustomersErrored,
-    (customers, loaded, errored) => {
-      const customer = customers[id];
-      if (customer) {
-        return {
-          ...customer,
-          loading: false,
-          errored: errored,
-          empty: false,
-        } as fromModels.CustomerDetailsItem & LoadingModes;
-      } else {
-        return null;
-      }
-    },
-  );
+export const selectCustomerDetails = createSelector(
+  selectCustomerEntities,
+  selectCustomersLoaded,
+  selectCustomersErrored,
+  selectSelectedCustomerId,
+  (customers, loading, errored, id) => {
+    if (id === undefined) {
+      return undefined;
+    }
+    const customer = customers[id];
+    if (customer) {
+      return {
+        ...customer,
+        loading: !loading,
+        errored: errored,
+        empty: false,
+      } as fromModels.CustomerDetailsItem & LoadingModes;
+    } else {
+      return null;
+    }
+  },
+);
 
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,

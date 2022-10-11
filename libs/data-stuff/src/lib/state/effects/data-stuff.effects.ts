@@ -4,7 +4,7 @@ import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { filter, map, tap } from 'rxjs';
 import { selectCustomersNeedLoaded } from '..';
-import { CustomerCommands } from '../actions/customer.actions';
+import { CustomerCommands, CustomerEvents } from '../actions/customer.actions';
 // prettier-ignore
 @Injectable()
 export class DataStuffEffects {
@@ -21,6 +21,24 @@ export class DataStuffEffects {
       map(() => CustomerCommands.load()), // time to make the donuts.
     );
   });
+
+  setSelectedCustomer$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      map((r) => r.payload.routerState.url.match(/\/crm\/details\/(.*)$/i)),
+      map((r) =>  {
+          if(r) {
+            if(r[1]) {
+              
+              return CustomerEvents.selected({payload: r[1]});
+            } 
+            
+          }
+          return {type: 'BLAM'}
+        })
+      
+    )
+  }, { dispatch: true});
 
   constructor(
     private readonly actions$: Actions,
