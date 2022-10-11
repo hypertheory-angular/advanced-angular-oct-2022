@@ -14,6 +14,7 @@ import { CustomerDetailsComponent } from './components/customer-details/customer
 import { AlertComponent } from '@ht/core-ui';
 import { ModesComponent } from './containers/modes/modes.component';
 import { SharedModule } from '@ht/shared';
+import { DataStuffEffects } from './state/effects/data-stuff.effects';
 const routes: Routes = [
   {
     path: '',
@@ -32,7 +33,8 @@ const routes: Routes = [
             component: CustomerListComponent,
           },
           {
-            path: 'details', // TODO: Add Route Parameter
+            // details/8938938938
+            path: 'details/:id', // TODO: Add Route Parameter
             component: CustomerDetailsComponent,
           },
           {
@@ -51,7 +53,10 @@ const routes: Routes = [
     StoreModule.forFeature(featureName, reducers),
     AlertComponent,
     SharedModule,
-    EffectsModule.forFeature([CustomerEffects]),
+    EffectsModule.forFeature([
+      CustomerEffects,
+      DataStuffEffects,
+    ]),
     HttpClientModule,
   ],
   declarations: [

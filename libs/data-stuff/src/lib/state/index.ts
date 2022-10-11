@@ -6,7 +6,7 @@ import {
 
 import * as fromCustomers from './reducers/customers.reducer';
 import * as fromModels from '../models';
-import { LoadingModes } from '@ht/shared';
+import { LoadingModes, selectUrl } from '@ht/shared';
 export const featureName = 'data-stuff';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -39,8 +39,18 @@ const selectCustomersErrored = createSelector(
 );
 // 4. What your Components Need
 
-// TODO: We need one that returns a CustomerSummaryList
-
+// if they are at the /crm url (the end of contains /crm)
+// and the data is currently loaded, then yeah, we need to load the data.
+const paths = {
+  crm: /\/crm/i,
+};
+export const selectCustomersNeedLoaded = createSelector(
+  selectUrl,
+  selectCustomersLoaded,
+  (url, loaded) => {
+    return !loaded && !!url.match(paths.crm);
+  },
+);
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,
   selectCustomersLoaded,
