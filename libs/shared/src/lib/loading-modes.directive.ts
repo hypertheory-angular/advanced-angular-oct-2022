@@ -73,5 +73,5 @@ export type LoadingModes = {
   errored: boolean;
   empty: boolean;
 };
-// TODO: This should be in shared.
+
 type AlertStyles = 'info' | 'warning' | 'success' | 'error';
