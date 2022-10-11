@@ -1,5 +1,5 @@
 describe('The Data CRM Feature', () => {
-  describe.only('The Happy Path', () => {
+  describe('The Happy Path', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',
@@ -34,6 +34,21 @@ describe('The Data CRM Feature', () => {
     });
     it('loads', () => {
       // left intentionally blank.
+    });
+  });
+
+  describe.only('Slow Api Response', () => {
+    beforeEach(() => {
+      cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
+        fixture: 'employees-full.json',
+        delay: 3000, // three seconds
+      }).as('response');
+      cy.visit('/data/crm');
+    });
+    it('loads', () => {
+      cy.wait('@response');
+
+      // I write tests..
     });
   });
 });

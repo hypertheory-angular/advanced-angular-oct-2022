@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { CustomersComponent } from './containers/customers/customers.component';
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
+import { AlertComponent } from '@ht/core-ui';
 const routes: Routes = [
   {
     path: '',
@@ -42,6 +43,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature(featureName, reducers),
+    AlertComponent,
     EffectsModule.forFeature([CustomerEffects]),
     HttpClientModule,
   ],
