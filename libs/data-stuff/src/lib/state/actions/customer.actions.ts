@@ -8,7 +8,9 @@ import { CustomerEntity } from '../reducers/customers.reducer';
 // - fireRequested
 export const CustomerEvents = createActionGroup({
   source: 'Customer Events',
-  events: {},
+  events: {
+    error: emptyProps(),
+  },
 });
 // Commands
 // Things that cause something to happen - like "load the customers", or "fire this employee", etc.

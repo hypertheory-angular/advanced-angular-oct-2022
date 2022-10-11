@@ -6,6 +6,7 @@ import {
 
 import * as fromCustomers from './reducers/customers.reducer';
 import * as fromModels from '../models';
+import { LoadingModes } from '@ht/shared';
 export const featureName = 'data-stuff';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -28,14 +29,27 @@ const selectCustomersBranch = createSelector(selectFeature, (f) => f.customers);
 const { selectAll: selectAllCustomerEntityArray } =
   fromCustomers.adapter.getSelectors(selectCustomersBranch);
 
+const selectCustomersLoaded = createSelector(
+  selectCustomersBranch,
+  (b) => b.loaded,
+);
+const selectCustomersErrored = createSelector(
+  selectCustomersBranch,
+  (b) => b.errored,
+);
 // 4. What your Components Need
 
 // TODO: We need one that returns a CustomerSummaryList
 
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,
-  (customers) => {
-    const result: fromModels.CustomerSummaryList = {
+  selectCustomersLoaded,
+  selectCustomersErrored,
+  (customers, loaded, errored) => {
+    const result: fromModels.CustomerSummaryList & LoadingModes = {
+      loading: !loaded,
+      errored,
+      empty: customers.length === 0,
       data: customers.map(
         (cust) =>
           ({

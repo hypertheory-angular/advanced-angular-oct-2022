@@ -1,29 +1,30 @@
-<section
-  *ngIf="model$ | async as model"
-  class="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3"
+<ng-container
+  *htSharedLoadingModes="
+    model$ | async;
+    loading: 'Getting the Customer List! Stand By!';
+    empty: 'Sorry - there are no customers! Get Busy!';
+    errored: 'Wow, bummer, that failed. Try again later?'
+  "
 >
-  <ht-ui-alert
-    alertStyle="info"
-    *ngIf="model.data.length === 0"
+  <section
+    class="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3"
   >
-    <p>You have no data!</p>
-  </ht-ui-alert>
-  <ng-container *ngIf="model.data.length > 0">
-    <div
-      class="card w-96 bg-base-100 shadow-xl"
-      *ngFor="let cust of model.data"
-    >
-      <div class="card-body">
-        <h2 class="card-title">{{ cust.firstName }} {{ cust.lastName }}</h2>
-        <p>{{ cust.firstName }} works at {{ cust.company }}</p>
-        <div class="card-actions justify-end">
-          <a
-            class="btn btn-sm btn-accent"
-            [routerLink]="['..', 'details', cust.id]"
-            >Details</a
-          >
+    <ul>
+      <li *ngFor="let cust of (model$ | async)?.data as model">
+        <div class="card w-96 bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title">{{ cust.firstName }} {{ cust.lastName }}</h2>
+            <p>{{ cust.firstName }} works at {{ cust.company }}</p>
+            <div class="card-actions justify-end">
+              <a
+                class="btn btn-sm btn-accent"
+                [routerLink]="['..', 'details', cust.id]"
+                >Details</a
+              >
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </ng-container>
-</section>
+      </li>
+    </ul>
+  </section>
+</ng-container>

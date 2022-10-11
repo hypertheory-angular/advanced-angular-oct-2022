@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 import {
   CustomerCommands,
   CustomerDocuments,
+  CustomerEvents,
 } from '../actions/customer.actions';
 import { CustomerEntity } from '../reducers/customers.reducer';
 @Injectable()
@@ -24,6 +25,7 @@ export class CustomerEffects {
             map(({ data }) => data), // just pluck the data property of the result ( { data: CustomerFromApi[]} => CustomerFromApi[])
             map(mapApiCustomersToCustomerEntities), // turn those into CustomerEntity[] ( [CustomerFromApi[] => CustomerEntity[])
             map((payload) => CustomerDocuments.customers({ payload })), // dispatch that!
+            catchError(() => of(CustomerEvents.error())),
           ),
         ),
       );

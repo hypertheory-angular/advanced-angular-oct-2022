@@ -37,7 +37,7 @@ describe('The Data CRM Feature', () => {
     });
   });
 
-  describe.only('Slow Api Response', () => {
+  describe('Slow Api Response', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',
@@ -46,7 +46,9 @@ describe('The Data CRM Feature', () => {
       cy.visit('/data/crm');
     });
     it('loads', () => {
+      // is the waiting alert showing.
       cy.wait('@response');
+      // is the waiting alert gone.
 
       // I write tests..
     });
