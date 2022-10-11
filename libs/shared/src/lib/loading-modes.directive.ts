@@ -28,39 +28,35 @@ export class LoadingModesDirective implements OnChanges {
   ngOnChanges(): void {
     // back on solid ground
     this.viewContainerRef.clear();
+    if (this.modes?.empty) {
+      this.displayMessage(this.empty, 'info');
+      return;
+    }
     if (this.modes?.errored) {
-      if (typeof this.errored !== 'string') {
-        this.viewContainerRef.createEmbeddedView(this.errored);
-      } else {
-        const c = this.viewContainerRef.createComponent(AlertComponent);
-        c.instance.alertStyle = 'error';
-        c.instance.message = this.errored;
-        return;
-      }
+      this.displayMessage(this.errored, 'error');
+      return;
     }
     if (this.modes?.loading) {
-      if (typeof this.loading !== 'string') {
-        this.viewContainerRef.createEmbeddedView(this.loading);
-      } else {
-        const c = this.viewContainerRef.createComponent(AlertComponent);
-        c.instance.alertStyle = 'warning';
-        c.instance.message = this.loading;
-        return;
-      }
-    }
-    if (this.modes?.empty) {
-      if (typeof this.empty !== 'string') {
-        this.viewContainerRef.createEmbeddedView(this.empty);
-      } else {
-        const c = this.viewContainerRef.createComponent(AlertComponent);
-        c.instance.alertStyle = 'error';
-        c.instance.message = this.empty;
-        return;
-      }
+      this.displayMessage(this.loading, 'warning');
+      return;
     }
 
     // the default - just show the "happy path"
     this.viewContainerRef.createEmbeddedView(this.template);
+  }
+
+  private displayMessage(
+    comp: TemplateRef<unknown> | string,
+    style: AlertStyles,
+  ) {
+    if (typeof comp !== 'string') {
+      this.viewContainerRef.createEmbeddedView(comp);
+      return;
+    } else {
+      const c = this.viewContainerRef.createComponent(AlertComponent);
+      c.instance.alertStyle = style;
+      c.instance.message = comp;
+    }
   }
 }
 
@@ -69,3 +65,5 @@ export type LoadingModes = {
   errored: boolean;
   empty: boolean;
 };
+// TODO: This should be in shared.
+type AlertStyles = 'info' | 'warning' | 'success' | 'error';

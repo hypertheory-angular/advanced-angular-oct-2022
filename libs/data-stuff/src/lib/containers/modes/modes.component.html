@@ -40,7 +40,7 @@
   <div
     *htSharedLoadingModes="
       modes$ | async;
-      loading: loadingTemplate;
+      loading: LoadingTemplate;
       empty: EmptyTemplate;
       errored: ErroredTemplate
     "
@@ -88,7 +88,7 @@
     {{ modes$ | async | json }}
 </pre>
 
-<ng-template #loadingTemplate>
+<ng-template #LoadingTemplate>
   <p>This is the template I'm using to say stuff is loading.</p>
 </ng-template>
 
