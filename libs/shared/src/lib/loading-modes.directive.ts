@@ -2,7 +2,6 @@ import {
   Directive,
   Input,
   OnChanges,
-  SimpleChanges,
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
@@ -26,23 +25,24 @@ export class LoadingModesDirective implements OnChanges {
     private template: TemplateRef<unknown>,
   ) {}
   ngOnChanges(): void {
-    // back on solid ground
-    this.viewContainerRef.clear();
-    if (this.modes?.empty) {
-      this.displayMessage(this.empty, 'info');
-      return;
+    if (this.modes) {
+      const mode = this.getMode(this.modes);
+      this.viewContainerRef.clear();
+      switch (mode) {
+        case 'empty': {
+          return this.displayMessage(this.empty, 'warning');
+        }
+        case 'loading': {
+          return this.displayMessage(this.loading, 'info');
+        }
+        case 'errored': {
+          return this.displayMessage(this.errored, 'error');
+        }
+        case 'ready': {
+          this.viewContainerRef.createEmbeddedView(this.template);
+        }
+      }
     }
-    if (this.modes?.errored) {
-      this.displayMessage(this.errored, 'error');
-      return;
-    }
-    if (this.modes?.loading) {
-      this.displayMessage(this.loading, 'warning');
-      return;
-    }
-
-    // the default - just show the "happy path"
-    this.viewContainerRef.createEmbeddedView(this.template);
   }
 
   private displayMessage(
@@ -58,8 +58,16 @@ export class LoadingModesDirective implements OnChanges {
       c.instance.message = comp;
     }
   }
+
+  getMode(x: LoadingModes): LoadingKeys {
+    if (x.loading) return 'loading';
+    if (x.errored) return 'errored';
+    if (x.empty) return 'empty';
+    return 'ready';
+  }
 }
 
+type LoadingKeys = keyof LoadingModes | 'ready';
 export type LoadingModes = {
   loading: boolean;
   errored: boolean;
