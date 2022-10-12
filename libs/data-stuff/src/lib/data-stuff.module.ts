@@ -15,6 +15,7 @@ import { AlertComponent, CoreUiModule } from '@ht/core-ui';
 import { ModesComponent } from './containers/modes/modes.component';
 import { SharedModule } from '@ht/shared';
 import { DataStuffEffects } from './state/effects/data-stuff.effects';
+import { RoleFilterComponent } from './components/role-filter/role-filter.component';
 const routes: Routes = [
   {
     path: '',
@@ -67,6 +68,7 @@ const routes: Routes = [
     CustomerListComponent,
     CustomerDetailsComponent,
     ModesComponent,
+    RoleFilterComponent,
   ],
 })
 export class DataStuffModule {}

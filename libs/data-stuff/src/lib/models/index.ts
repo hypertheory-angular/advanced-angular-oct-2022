@@ -9,6 +9,7 @@ export type CustomerSummaryListItem = Pick<
 
 export type CustomerSummaryList = {
   data: CustomerSummaryListItem[];
+  roles: string[];
 };
 
 export type CustomerDetailsItem = CustomerEntity;

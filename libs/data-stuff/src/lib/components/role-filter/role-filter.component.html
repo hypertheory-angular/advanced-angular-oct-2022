@@ -1,0 +1,16 @@
+<div class="w-64">
+  <div
+    class="form-control"
+    *ngFor="let role of roleObj"
+  >
+    <label class="label cursor-pointer flex">
+      <span class="label-text">{{ role.name | titlecase }}</span>
+      <input
+        (change)="toggleRole($event, role)"
+        type="checkbox"
+        class="toggle"
+        [checked]="role.checked"
+      />
+    </label>
+  </div>
+</div>
