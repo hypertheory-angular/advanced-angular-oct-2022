@@ -34,7 +34,7 @@ const selectRoleFilterBranch = createSelector(
 
 // 3. Helpers (optional)
 
-const selectRoleFiltersExcludedRoles = createSelector(
+export const selectRoleFiltersExcludedRoles = createSelector(
   selectRoleFilterBranch,
   (b) => b.excludedRoles,
 );

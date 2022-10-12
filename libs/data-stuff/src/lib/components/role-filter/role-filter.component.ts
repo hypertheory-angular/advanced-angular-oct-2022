@@ -7,6 +7,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { selectRoleFiltersExcludedRoles } from '../../state';
 import { RoleFilterEvents } from '../../state/actions/role-filter.actions';
 
 @Component({
@@ -15,26 +16,18 @@ import { RoleFilterEvents } from '../../state/actions/role-filter.actions';
   styleUrls: ['./role-filter.component.css'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class RoleFilterComponent implements OnInit {
+export class RoleFilterComponent {
   @Input() roles: string[] = [];
+  excluded$ = this.store.select(selectRoleFiltersExcludedRoles);
 
-  roleObj: RoleMember[] = [];
-
-  constructor(private readonly store: Store) {}
-  ngOnInit(): void {
-    this.roleObj = this.roles.map((r) => ({ name: r, checked: true }));
+  getIsExcluded(role: string, excluded: string[]) {
+    // This is a bit sus.
+    return excluded.some((x) => x === role);
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  toggleRole(event: any, role: RoleMember) {
-    if (!role.checked) {
-      this.store.dispatch(RoleFilterEvents.removed({ payload: role.name }));
-    } else {
-      this.store.dispatch(RoleFilterEvents.added({ payload: role.name }));
-    }
-    role.checked = !role.checked;
+  constructor(private readonly store: Store) {}
 
-    //event.preventDefault();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  toggleRole(role: string) {
+    this.store.dispatch(RoleFilterEvents.toggle({ payload: role }));
   }
 }
-
-type RoleMember = { name: string; checked: boolean };

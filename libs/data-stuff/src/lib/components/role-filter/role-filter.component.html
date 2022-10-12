@@ -1,15 +1,19 @@
-<div class="w-64">
+<h3 class="text-3xl">Select Roles To Exclude</h3>
+<div
+  class="w-64"
+  *ngIf="excluded$ | async as excluded"
+>
   <div
     class="form-control"
-    *ngFor="let role of roleObj"
+    *ngFor="let role of roles"
   >
     <label class="label cursor-pointer flex">
-      <span class="label-text">{{ role.name | titlecase }}</span>
+      <span class="label-text">{{ role | titlecase }}</span>
       <input
-        (change)="toggleRole($event, role)"
+        (change)="toggleRole(role)"
         type="checkbox"
         class="toggle"
-        [checked]="role.checked"
+        [checked]="getIsExcluded(role, excluded)"
       />
     </label>
   </div>

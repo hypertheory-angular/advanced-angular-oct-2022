@@ -11,6 +11,23 @@ const initialState: RoleFilterState = {
 
 export const reducer = createReducer(
   initialState,
+  on(RoleFilterEvents.toggle, (s, a) => {
+    if (s.excludedRoles.some((r) => r === a.payload)) {
+      // it's there
+      return {
+        ...s,
+        excludedRoles: s.excludedRoles.filter((r) => r !== a.payload),
+      };
+    } else {
+      return {
+        ...s,
+        excludedRoles: [
+          a.payload,
+          ...s.excludedRoles,
+        ],
+      };
+    }
+  }),
   on(RoleFilterEvents.removed, (s, a) => ({
     ...s,
     excludedRoles: s.excludedRoles.filter((r) => r !== a.payload),

@@ -5,5 +5,6 @@ export const RoleFilterEvents = createActionGroup({
   events: {
     added: props<{ payload: string }>(),
     removed: props<{ payload: string }>(),
+    toggle: props<{ payload: string }>(),
   },
 });
