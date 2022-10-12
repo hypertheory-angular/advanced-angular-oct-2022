@@ -52,6 +52,7 @@ function mapApiCustomersToCustomerEntities(
       dob: a.profile.dob,
       email: a.email,
       company: a.profile.company,
+      roles: a.roles,
     };
     return result;
   });
@@ -92,4 +93,5 @@ type CustomerFromApi = {
     address: string;
   };
   email: string;
+  roles: string[];
 };

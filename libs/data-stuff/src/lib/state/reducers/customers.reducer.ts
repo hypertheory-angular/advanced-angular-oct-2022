@@ -10,6 +10,7 @@ export interface CustomerEntity {
   dob: string;
   address: string;
   company: string;
+  roles: string[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
