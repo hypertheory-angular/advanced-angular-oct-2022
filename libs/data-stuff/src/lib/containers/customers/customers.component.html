@@ -11,4 +11,23 @@
     >Details</a
   >
 </div>
+<select>
+  <option *ngFor="let role of roles$ | async">{{ role }}</option>
+</select>
+
+<div class="w-64">
+  <div
+    class="form-control"
+    *ngFor="let role of roles$ | async"
+  >
+    <label class="label cursor-pointer flex">
+      <span class="label-text">{{ role | titlecase }}</span>
+      <input
+        type="checkbox"
+        class="toggle"
+        checked
+      />
+    </label>
+  </div>
+</div>
 <router-outlet></router-outlet>

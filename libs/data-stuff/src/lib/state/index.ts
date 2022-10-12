@@ -7,7 +7,6 @@ import {
 import * as fromCustomers from './reducers/customers.reducer';
 import * as fromModels from '../models';
 import { LoadingModes, selectUrl } from '@ht/shared';
-import { LoadingModesDirective } from 'libs/shared/src/lib/loading-modes.directive';
 export const featureName = 'data-stuff';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -142,3 +141,19 @@ export function convertCustomerEntityToCustomerSummaryListItem(
   };
   return customer;
 }
+
+// Practice: Create a new selector function that returns a sorted list of all the roles (no duplicates!)
+const selectUniqueCustomerRoles = createSelector(
+  selectAllCustomerEntityArray,
+  (customers) => {
+    const roles = new Set<string>();
+    customers.forEach((cust) => cust.roles.forEach((role) => roles.add(role)));
+    return roles;
+  },
+);
+export const selectSortedUniqueCustomerRoles = createSelector(
+  selectUniqueCustomerRoles,
+  (roles) => {
+    return [...Array.from(roles).sort((lhs, rhs) => lhs.localeCompare(rhs))];
+  },
+);
