@@ -16,6 +16,9 @@ import { ModesComponent } from './containers/modes/modes.component';
 import { SharedModule } from '@ht/shared';
 import { DataStuffEffects } from './state/effects/data-stuff.effects';
 import { RoleFilterComponent } from './components/role-filter/role-filter.component';
+import { CompaniesComponent } from './containers/companies/companies.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { UniqueCompanyAsyncValidator } from './containers/companies/company-validator';
 const routes: Routes = [
   {
     path: '',
@@ -24,6 +27,10 @@ const routes: Routes = [
       {
         path: 'modes',
         component: ModesComponent,
+      },
+      {
+        path: 'companies',
+        component: CompaniesComponent,
       },
       {
         path: 'crm',
@@ -52,6 +59,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature(featureName, reducers),
+    ReactiveFormsModule,
     AlertComponent,
     SharedModule,
     EffectsModule.forFeature([
@@ -69,6 +77,8 @@ const routes: Routes = [
     CustomerDetailsComponent,
     ModesComponent,
     RoleFilterComponent,
+    CompaniesComponent,
   ],
+  providers: [UniqueCompanyAsyncValidator],
 })
 export class DataStuffModule {}

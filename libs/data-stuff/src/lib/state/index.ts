@@ -76,6 +76,22 @@ const selectUniqueCustomerRoles = createSelector(
     return Array.from(roles);
   },
 );
+
+export const selectUniqueCompanies = createSelector(
+  selectAllCustomerEntityArray,
+  (customers) => {
+    const companies = new Set<string>();
+    customers.forEach((cust) => companies.add(cust.company));
+    return Array.from(companies);
+  },
+);
+
+export const doesCompanyExist = (company:string) => createSelector(
+  selectUniqueCompanies,
+  companies => {
+    return companies.filter(c => c === company).length >= 1;
+  }
+)
 export const selectSortedUniqueCustomerRoles = createSelector(
   selectUniqueCustomerRoles,
   (roles) => {
