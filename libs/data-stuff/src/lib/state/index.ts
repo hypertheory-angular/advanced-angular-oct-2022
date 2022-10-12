@@ -44,6 +44,18 @@ const selectSelectedCustomerId = createSelector(
   selectCustomersBranch,
   (b) => b.selectedCustomerId,
 );
+
+const selectCustomerLoadingInformation = createSelector(
+  selectCustomersLoaded,
+  selectCustomersErrored,
+  (loaded, errored) => {
+    const result: Omit<LoadingModes, 'empty'> = {
+      loading: !loaded,
+      errored: errored,
+    };
+    return result;
+  },
+);
 // 4. What your Components Need
 
 // if they are at the /crm url (the end of contains /crm)
@@ -61,17 +73,15 @@ export const selectCustomersNeedLoaded = createSelector(
 
 export const selectCustomerDetails = createSelector(
   selectCustomerEntities,
-  selectCustomersLoaded,
-  selectCustomersErrored,
+  selectCustomerLoadingInformation,
   selectSelectedCustomerId,
-  (customers, loading, errored, id) => {
+  (customers, modeInfo, id) => {
     if (id === undefined) {
       return undefined;
     }
     const customer = customers[id];
     const modes: LoadingModes = {
-      loading: !loading,
-      errored: errored,
+      ...modeInfo,
       empty: !customer,
     };
     if (customer) {
@@ -96,25 +106,16 @@ type ApiResponseWithModes<T> = {
 
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,
-  selectCustomersLoaded,
-  selectCustomersErrored,
-  (customers, loaded, errored) => {
+  selectCustomerLoadingInformation,
+  (customers, loadModes) => {
     const modes: LoadingModes = {
-      loading: !loaded,
-      errored: errored,
+      ...loadModes,
       empty: !customers,
     };
     if (customers) {
-      const data = customers.map((cust) => {
-        const customer: fromModels.CustomerSummaryListItem = {
-          id: cust.id,
-          firstName: cust.firstName,
-          lastName: cust.lastName,
-          company: cust.company,
-          fullName: `${cust.firstName} ${cust.lastName}`,
-        };
-        return customer;
-      });
+      const data: fromModels.CustomerSummaryListItem[] = customers.map(
+        convertCustomerEntityToCustomerSummaryListItem,
+      );
       const result: ApiResponseWithModes<fromModels.CustomerSummaryList> = {
         data: { data },
         modes,
@@ -128,3 +129,16 @@ export const selectCustomerListModel = createSelector(
     }
   },
 );
+
+export function convertCustomerEntityToCustomerSummaryListItem(
+  cust: fromCustomers.CustomerEntity,
+): fromModels.CustomerSummaryListItem {
+  const customer: fromModels.CustomerSummaryListItem = {
+    id: cust.id,
+    firstName: cust.firstName,
+    lastName: cust.lastName,
+    company: cust.company,
+    fullName: `${cust.firstName} ${cust.lastName}`,
+  };
+  return customer;
+}
