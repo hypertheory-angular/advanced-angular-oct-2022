@@ -1,5 +1,10 @@
-<ng-container *ngIf="customer$ | async as customer">
-  <div *htSharedLoadingModes="customer">
+<div
+  *htSharedLoadingModes="
+    (customer$ | async)?.modes || null;
+    empty: emptyTemplate
+  "
+>
+  <ng-container *ngIf="(customer$ | async)?.data as customer">
     <ht-ui-card-with-link
       [title]="customer.firstName + ' ' + customer.lastName"
     >
@@ -8,12 +13,17 @@
       <p>You can email {{ customer.firstName }} at {{ customer.email }}</p>
       <p>{{ customer.firstName }} address is {{ customer.address }}</p>
     </ht-ui-card-with-link>
-  </div>
+  </ng-container>
+</div>
 
-  <ht-ui-alert
-    *ngIf="(customer$ | async) === null"
-    message="That Customer Does Exist"
-  ></ht-ui-alert>
-</ng-container>
-
-<pre> {{ customer$ | async | json }} </pre>
+<ng-template #emptyTemplate>
+  <ht-ui-alert alertStyle="warning">
+    <h3 class="text-3xl font-extrabold">Four Oh Four!</h3>
+    <p>Sorry - there is no longer a customer with that id.</p>
+    <a
+      class="btn btn-accent"
+      [routerLink]="['..', '..', 'list']"
+      >Back to the List</a
+    >
+  </ht-ui-alert>
+</ng-template>

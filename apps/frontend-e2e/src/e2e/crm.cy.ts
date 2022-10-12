@@ -41,7 +41,7 @@ describe('The Data CRM Feature', () => {
     beforeEach(() => {
       cy.intercept('GET', 'https://api.mycrmsitedotcom.com/customers', {
         fixture: 'employees-full.json',
-        delay: 3000, // three seconds
+        delay: 1500, // three seconds
       }).as('response');
       cy.visit('/data/crm');
     });

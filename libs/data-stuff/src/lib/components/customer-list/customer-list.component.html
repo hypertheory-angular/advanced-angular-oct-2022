@@ -1,6 +1,6 @@
 <ng-container
   *htSharedLoadingModes="
-    model$ | async;
+    (model$ | async)?.modes || null;
     loading: 'Getting the Customer List! Stand By!';
     empty: 'Sorry - there are no customers! Get Busy!';
     errored: 'Wow, bummer, that failed. Try again later?'
@@ -10,7 +10,7 @@
     class="grid grid-cols-1 gap-4 pt-4 md:grid-cols-2 sm:grid-cols-1 lg:grid-cols-3"
   >
     <ul>
-      <li *ngFor="let cust of (model$ | async)?.data as model">
+      <li *ngFor="let cust of (model$ | async)?.data?.data as model">
         <div class="card w-96 bg-base-100 shadow-xl">
           <div class="card-body">
             <h2 class="card-title">{{ cust.fullName }}</h2>

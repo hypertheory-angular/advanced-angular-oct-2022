@@ -7,6 +7,7 @@ import {
 import * as fromCustomers from './reducers/customers.reducer';
 import * as fromModels from '../models';
 import { LoadingModes, selectUrl } from '@ht/shared';
+import { LoadingModesDirective } from 'libs/shared/src/lib/loading-modes.directive';
 export const featureName = 'data-stuff';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -68,39 +69,62 @@ export const selectCustomerDetails = createSelector(
       return undefined;
     }
     const customer = customers[id];
+    const modes: LoadingModes = {
+      loading: !loading,
+      errored: errored,
+      empty: !customer,
+    };
     if (customer) {
-      const result: fromModels.CustomerDetailsItem & LoadingModes = {
-        ...customer,
-        loading: !loading,
-        errored: errored,
-        empty: false,
+      const result: ApiResponseWithModes<fromModels.CustomerDetailsItem> = {
+        data: customer,
+        modes,
       };
       return result;
     } else {
-      return null;
+      const result: ApiResponseWithModes<fromModels.CustomerDetailsItem> = {
+        modes,
+      };
+      return result;
     }
   },
 );
+
+type ApiResponseWithModes<T> = {
+  modes: LoadingModes;
+  data?: T;
+};
 
 export const selectCustomerListModel = createSelector(
   selectAllCustomerEntityArray,
   selectCustomersLoaded,
   selectCustomersErrored,
   (customers, loaded, errored) => {
-    const result: fromModels.CustomerSummaryList & LoadingModes = {
+    const modes: LoadingModes = {
       loading: !loaded,
-      errored,
-      empty: customers.length === 0,
-      data: customers.map(
-        (cust): fromModels.CustomerSummaryListItem => ({
+      errored: errored,
+      empty: !customers,
+    };
+    if (customers) {
+      const data = customers.map((cust) => {
+        const customer: fromModels.CustomerSummaryListItem = {
           id: cust.id,
           firstName: cust.firstName,
           lastName: cust.lastName,
-          fullName: `${cust.firstName} ${cust.lastName}`,
           company: cust.company,
-        }),
-      ),
-    };
-    return result;
+          fullName: `${cust.firstName} ${cust.lastName}`,
+        };
+        return customer;
+      });
+      const result: ApiResponseWithModes<fromModels.CustomerSummaryList> = {
+        data: { data },
+        modes,
+      };
+      return result;
+    } else {
+      const result: ApiResponseWithModes<fromModels.CustomerSummaryList> = {
+        modes,
+      };
+      return result;
+    }
   },
 );

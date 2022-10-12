@@ -14,7 +14,7 @@ export class LoadingModesDirective implements OnChanges {
   @Input('htSharedLoadingModes') modes: LoadingModes | null = null;
 
   @Input('htSharedLoadingModesLoading') loading: TemplateRef<unknown> | string =
-    'Your Data Is Loading';
+    'Please Wait Your Data Is Loading!';
   @Input('htSharedLoadingModesErrored') errored: TemplateRef<unknown> | string =
     'Sorry There was an Error Loading Your Data';
   @Input('htSharedLoadingModesEmpty') empty: TemplateRef<unknown> | string =

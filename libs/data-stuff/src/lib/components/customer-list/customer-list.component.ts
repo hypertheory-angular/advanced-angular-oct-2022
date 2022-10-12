@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectCustomerListModel } from '../../state';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'ht-customer-list',
